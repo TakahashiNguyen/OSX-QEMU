@@ -17,7 +17,6 @@
 #
 ###############################################################################
 
-
 MY_OPTIONS="+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsave,+xsaveopt,check"
 
 # This script works for Big Sur, Catalina, Mojave, and High Sierra. Tested with
@@ -30,19 +29,19 @@ OVMF_DIR="."
 
 # shellcheck disable=SC2054
 args=(
-  # -enable-kvm 
-  # -accel whpx
+  # -enable-kvm
+  -accel whpx
   -machine q35
-  -cpu Penryn,kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,"$MY_OPTIONS"
-  -m "$ALLOCATED_RAM" 
+  -cpu Penryn,vendor=GenuineIntel,+invtsc,"$MY_OPTIONS"
+  -m "$ALLOCATED_RAM"
   -device qemu-xhci,id=xhci
   -device ich9-intel-hda -device hda-duplex
   -device ich9-ahci,id=sata
   -device usb-kbd,bus=xhci.0 -device usb-tablet,bus=xhci.0
   -device usb-ehci,id=ehci
   -device isa-applesmc,osk="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
-  -drive if=pflash,format=raw,readonly=on,file="$REPO_PATH/$OVMF_DIR/OVMF_CODE.fd"
-  -drive if=pflash,format=raw,file="$REPO_PATH/$OVMF_DIR/OVMF_VARS.fd"
+  -bios "OVMF_combined.fd"
+  -rtc base=localtime
   -smbios type=2
   -device ide-hd,bus=sata.2,drive=OpenCoreBoot
   -device ide-hd,bus=sata.3,drive=InstallMedia
@@ -52,7 +51,7 @@ args=(
   -drive id=MacHDD,if=none,file="$REPO_PATH/mac_hdd_ng.img",format=qcow2
   -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net-pci,netdev=net0,id=net0,mac=52:54:00:c9:18:27
   -monitor stdio
-  -device vmware-svga
+  -device VGA,vgamem_mb=128
 )
 
 qemu-system-x86_64.exe "${args[@]}"
