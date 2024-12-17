@@ -1,1 +1,1 @@
-START /MIN wsl -e bash /mnt/c/OSX-KVM/OpenCore-Boot.sh
+START /MIN wsl -e bash /mnt/c/OSX-KVM/OpenCore-Windows.sh

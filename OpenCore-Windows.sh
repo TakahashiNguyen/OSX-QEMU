@@ -31,7 +31,7 @@ OVMF_DIR="."
 # shellcheck disable=SC2054
 args=(
   # -enable-kvm 
-  -accel whpx
+  # -accel whpx
   -machine q35
   -cpu Penryn,kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,"$MY_OPTIONS"
   -smp 8,cores=8,sockets=1
@@ -42,7 +42,8 @@ args=(
   -device usb-kbd,bus=xhci.0 -device usb-tablet,bus=xhci.0
   -device usb-ehci,id=ehci
   -device isa-applesmc,osk="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
-  -bios "OVMF_combined.fd"
+  -drive if=pflash,format=raw,readonly=on,file="$REPO_PATH/$OVMF_DIR/OVMF_CODE.fd"
+  -drive if=pflash,format=raw,file="$REPO_PATH/$OVMF_DIR/OVMF_VARS-1920x1080.fd"
   -smbios type=2
   -device ide-hd,bus=sata.2,drive=OpenCoreBoot
   -device ide-hd,bus=sata.3,drive=InstallMedia

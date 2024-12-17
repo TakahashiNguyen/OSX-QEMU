@@ -33,7 +33,7 @@ args=(
   -enable-kvm 
   # -accel whpx
   -machine q35
-  -cpu Penryn,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,"$MY_OPTIONS"
+  -cpu Penryn,kvm=on,vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,"$MY_OPTIONS"
   -smp 8,cores=8,sockets=1
   -m "$ALLOCATED_RAM" 
   -device qemu-xhci,id=xhci
