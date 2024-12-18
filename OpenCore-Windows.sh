@@ -32,7 +32,7 @@ args=(
   # -enable-kvm
   -accel whpx
   -machine q35
-  -cpu Penryn,vendor=GenuineIntel,+invtsc,"$MY_OPTIONS"
+  -cpu Westmere,vendor=GenuineIntel,+invtsc,"$MY_OPTIONS"
   -m "$ALLOCATED_RAM"
   -device qemu-xhci,id=xhci
   -device ich9-intel-hda -device hda-duplex
@@ -50,8 +50,7 @@ args=(
   -drive id=InstallMedia,if=none,file="$REPO_PATH/BaseSystem.img",format=raw
   -drive id=MacHDD,if=none,file="$REPO_PATH/mac_hdd_ng.img",format=qcow2
   -netdev user,id=net0,hostfwd=tcp::2222-:22 -device virtio-net-pci,netdev=net0,id=net0,mac=52:54:00:c9:18:27
-  -monitor stdio
-  -device VGA,vgamem_mb=128
+  -device VGA
 )
 
 qemu-system-x86_64.exe "${args[@]}"
